@@ -4,7 +4,7 @@ injectedRoot.id = "InjectedRoot";
 injectedRoot.style.display = "none";
 
 // inject handler
-const injectHTML = function (code) {
+const injectHTML = (code) => {
 	// remove from document and apply injected code
 	injectedRoot.remove();
 	if (!code) return;

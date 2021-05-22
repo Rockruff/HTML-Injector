@@ -46,21 +46,22 @@ class StorageWrapper {
 
 const extensionStorage = new StorageWrapper(browser.storage.local);
 
-browser.runtime.onMessage.addListener(function ({ hostname, code }, sender, sendResponse) {
+browser.runtime.onMessage.addListener(({ hostname, code }) => {
 	// get code
 	if (typeof code !== "string") {
 		return extensionStorage.get(hostname);
 	}
 
-	// notify relative tabs about code change
-	browser.tabs.query({ url: [`https://${hostname}/*`, `http://${hostname}/*`] }, function (tabs) {
-		for (let { id } of tabs) browser.tabs.sendMessage(id, code);
-	});
-
 	// set code
-	if (code !== "") {
-		extensionStorage.set(hostname, code);
-	} else {
-		extensionStorage.remove(hostname);
-	}
+	if (code !== "") extensionStorage.set(hostname, code);
+	else extensionStorage.remove(hostname);
+
+	// notify relative tabs about code change
+	browser.tabs
+		.query({ url: [`https://${hostname}/*`, `http://${hostname}/*`] })
+		.then((tabs) => {
+			for (let { id } of tabs) {
+				browser.tabs.sendMessage(id, code);
+			}
+		});
 });
