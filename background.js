@@ -5,7 +5,7 @@ class StorageWrapper {
 	}
 	pushTask(executor) {
 		let result = this.queue
-			.then(() => new Promise(executor)) // onFulfilled
+			.then(executor) // onFulfilled
 			.catch(console.error); // onRejected
 		this.queue = result;
 		return result;
@@ -18,19 +18,19 @@ class StorageWrapper {
 		});
 	}
 	clear() {
-		let executor = (resolve) => this.storage.clear(resolve);
+		let executor = () => this.storage.clear();
 		return this.pushTask(executor);
 	}
 	batchGet(keys) {
-		let executor = (resolve) => this.storage.get(keys, resolve);
+		let executor = () => this.storage.get(keys);
 		return this.pushTask(executor);
 	}
 	batchSet(keys) {
-		let executor = (resolve) => this.storage.set(keys, resolve);
+		let executor = () => this.storage.set(keys);
 		return this.pushTask(executor);
 	}
 	batchRemove(keys) {
-		let executor = (resolve) => this.storage.remove(keys, resolve);
+		let executor = () => this.storage.remove(keys);
 		return this.pushTask(executor);
 	}
 	get(key) {

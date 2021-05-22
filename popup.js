@@ -18,7 +18,7 @@ window.onload = async () => {
 	// enable format action
 	document.getElementById("Format").onclick = () => {
 		let raw = editor.getValue();
-		for (let parser of ["babel", "postcss", "html"]) {
+		for (let parser of ["html", "babel", "css"]) {
 			try {
 				let formatted = prettier.format(raw, {
 					parser,
@@ -28,8 +28,8 @@ window.onload = async () => {
 				});
 				if (formatted !== raw) {
 					editor.setValue(formatted, -1);
+					break;
 				}
-				break;
 			} catch {}
 		}
 	};
@@ -56,9 +56,9 @@ window.onload = async () => {
 		browser.runtime.sendMessage({ hostname, code });
 	};
 	document.getElementById("Delete").onclick = () => {
-		const template = "";
-		editor.setValue(template);
-		browser.runtime.sendMessage({ hostname, template });
+		const code = "";
+		editor.setValue(code);
+		browser.runtime.sendMessage({ hostname, code });
 	};
 
 	// load code from background
