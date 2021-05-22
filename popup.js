@@ -18,7 +18,7 @@ window.onload = async () => {
 	// enable format action
 	document.getElementById("Format").onclick = () => {
 		let raw = editor.getValue();
-		for (let parser of ["html", "babel", "css"]) {
+		for (let parser of ["css", "html", "babel"]) {
 			try {
 				let formatted = prettier.format(raw, {
 					parser,
