@@ -1,0 +1,76 @@
+body {
+	margin: 0;
+}
+#Editor {
+	line-height: 16px;
+	width: 480px;
+	height: 240px;
+}
+#Actions {
+	position: fixed;
+	right: 12px;
+	bottom: 12px;
+	display: flex;
+}
+#Actions > button {
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	margin: 0;
+	line-height: 0;
+	border: none;
+	outline: none;
+	border-radius: 50%;
+	transition: color 0.25s, background 0.25s;
+	color: #a7a7a7;
+	background: rgba(187, 134, 252, 0.3125);
+}
+#Actions > button:hover:not(:active) {
+	color: #fff;
+	background: rgba(187, 134, 252, 0.53125);
+}
+#Actions > button:not(:last-child) {
+	margin-right: 8px;
+}
+#Save > svg,
+#Delete > svg {
+	width: 62.5%;
+	height: 62.5%;
+	fill: currentColor;
+}
+#Format > svg {
+	width: 50%;
+	height: 50%;
+	fill: currentColor;
+}
+
+/* scroll beautify (webkit only) */
+:root {
+	--scrollbar-width: 6px;
+}
+::-webkit-scrollbar {
+	width: var(--scrollbar-width);
+	height: var(--scrollbar-width);
+}
+.ace_scrollbar-h {
+	right: var(--scrollbar-width) !important;
+}
+.ace_scrollbar-v {
+	bottom: var(--scrollbar-width) !important;
+}
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+	display: none;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece {
+	background: none;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: calc(var(--scrollbar-width) / 2);
+	background: rgba(255, 255, 255, 0.5);
+}
+.ace_scroller {
+	right: 0 !important;
+}
