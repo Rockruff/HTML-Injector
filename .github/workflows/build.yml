@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Redirect scripts in popup.html and manifest.json
+        run: |
+          redirect() {
+            remote=$1; local=$2
+            for file in `grep "$remote" popup.html | awk -F'"' '{ print $2; }'`
+            do wget "$file" -P "$local"; done
+            sed -i "s,$remote/[^\"]*/,$local/,g" popup.html
+            sed -i "s, $remote,,g" manifest.json
+          }
+          redirect "https://ace.c9.io" "ace"
+          redirect "https://prettier.io" "prettier"
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: build-release
+          path: |
+            ./*
+            !./.*
